@@ -18,16 +18,19 @@ public class ExperienciaController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "*")
     public Experiencia create(@RequestBody Experiencia experiencia) {
         return experienciaService.save(experiencia);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*")
     public List<Experiencia> getAll() {
         return experienciaService.getAll();
     }
 
     @GetMapping("/find")
+    @CrossOrigin(origins = "*")
     public Experiencia findById(
         @RequestParam Long id
     ) {
@@ -35,11 +38,13 @@ public class ExperienciaController {
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin(origins = "*")
     public Experiencia update(@PathVariable Long Id, @RequestBody Experiencia experiencia) {
         return experienciaService.update(Id, experiencia);
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> delete(@PathVariable Long Id) {
         experienciaService.delete(Id);
         return ResponseEntity.noContent().build();
