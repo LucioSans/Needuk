@@ -35,7 +35,7 @@ public class UsuarioService {
         return usuarioRepository.findByEmailAndSenha(email, senha).isPresent();
     }
     //Atualizar usuário
-    public Optional<Usuario> updateUser(Long id, Usuario updatedUserDetails) {
+    public Optional<Usuario> updateUsuario(Long id, Usuario updatedUserDetails) {
         Optional<Usuario> existingUserOptional = usuarioRepository.findById(id);
 
         if (existingUserOptional.isPresent()) {
