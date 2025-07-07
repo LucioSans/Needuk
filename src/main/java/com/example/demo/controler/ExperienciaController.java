@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/experiencias")
+@CrossOrigin("*")
 public class ExperienciaController {
 
     private final ExperienciaService experienciaService;
