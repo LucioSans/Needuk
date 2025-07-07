@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class User {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -15,11 +15,11 @@ public class User {
     private String telefone;
     private LocalDateTime dataCadastro;
 
-    public User() {
+    public Usuario() {
 
     }
 
-    public User(Long id, String nome, String email, String senha, String telefone, LocalDateTime dataCadastro, List<Experiencia> experiencias) {
+    public Usuario(Long id, String nome, String email, String senha, String telefone, LocalDateTime dataCadastro, List<Experiencia> experiencias) {
         Id = id;
         this.nome = nome;
         this.email = email;

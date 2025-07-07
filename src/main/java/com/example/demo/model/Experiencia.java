@@ -19,7 +19,7 @@ public class Experiencia {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Usuario user;
 
     public Experiencia() {
 
@@ -89,11 +89,11 @@ public class Experiencia {
         this.habilidades = habilidades;
     }
 
-    public User getUser() {
+    public Usuario getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Usuario user) {
         this.user = user;
     }
 }
