@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -33,6 +34,7 @@ public class UsuarioController {
     public List<Usuario> getAll(){return usuarioService.getAll();}
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<LoginRequestDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         boolean autenticado = usuarioService.autenticar(loginRequestDTO.getEmail(), String.valueOf(loginRequestDTO.getSenha()));
         if (autenticado) {

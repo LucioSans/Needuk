@@ -16,6 +16,7 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
     public Usuario() {
+
     }
 
     public Usuario(Long id, String nome, String email, String senha, String telefone, LocalDateTime dataCadastro, List<Experiencia> experiencias) {
