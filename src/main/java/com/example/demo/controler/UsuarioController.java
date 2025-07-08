@@ -2,6 +2,7 @@ package com.example.demo.controler;
 import com.example.demo.model.dto.LoginRequestDTO;
 import com.example.demo.model.Usuario;
 import com.example.demo.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
