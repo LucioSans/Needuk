@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 @RequestMapping("/experiencias")
-<<<<<<< HEAD
-=======
 @CrossOrigin(origins = "*")
->>>>>>> 235099a1a32eaeb3cc615d110936891a614e8960
+
 public class ExperienciaController {
 
     private final ExperienciaService experienciaService;
