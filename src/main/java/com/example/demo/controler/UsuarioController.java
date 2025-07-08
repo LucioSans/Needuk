@@ -21,15 +21,19 @@ public class UsuarioController {
     }
 
     @PostMapping("/")
+    @CrossOrigin(origins = "*")
     public Usuario create(@RequestBody Usuario user){return usuarioService.save(user);}
 
     @GetMapping("/usuarios/{id}")
+    @CrossOrigin(origins = "*")
     public Usuario getById(@PathVariable Long Id){return usuarioService.getById(Id);}
 
     @GetMapping("/usuarios")
+    @CrossOrigin(origins = "*")
     public List<Usuario> getAll(){return usuarioService.getAll();}
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         boolean autenticate = usuarioService.autenticar(loginRequestDTO.getEmail(), loginRequestDTO.getSenha());
         if (autenticate) {
@@ -40,12 +44,14 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Optional<Usuario> updatedUser = usuarioService.updateUsuario(id, usuario);
 
