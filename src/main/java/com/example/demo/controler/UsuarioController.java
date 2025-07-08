@@ -46,6 +46,7 @@ public class UsuarioController {
             // E o Spring o converte automaticamente para o JSON de falha
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticate);
         }
+
     }
 
     @DeleteMapping("/{id}")
