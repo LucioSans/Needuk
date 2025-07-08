@@ -8,7 +8,7 @@ public record LoginRequestDTO(String email, String senha) {
     public String getEmail() {
         return email;
     }
-
+    @NotNull
     public String getSenha() {
         return senha;
     }
