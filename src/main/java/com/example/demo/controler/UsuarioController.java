@@ -1,6 +1,8 @@
 package com.example.demo.controler;
 import com.example.demo.model.dto.LoginRequestDTO;
+import com.example.demo.model.dto.LoginResponseDTO;
 import com.example.demo.model.Usuario;
+import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
+
+    private UsuarioRepository usuarioRepository;
 
     private final UsuarioService usuarioService;
 
@@ -31,18 +35,16 @@ public class UsuarioController {
     public List<Usuario> getAll(){return usuarioService.getAll();}
 
     @PostMapping("/login")
-    public ResponseEntity<LoginRequestDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
-        boolean autenticado = usuarioService.autenticar(loginRequestDTO.getEmail(), String.valueOf(loginRequestDTO.getSenha()));
+    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
+
+        boolean autenticado = usuarioService.autenticar(loginRequestDTO.email(), loginRequestDTO.senha());
+
         if (autenticado) {
-            // Agora, você INSTANCIA um objeto LoginResponseDTO para o sucesso
-            LoginRequestDTO autheticate = new LoginRequestDTO("Login realizado com sucesso", true);
-            // E o Spring (Jackson) o converte automaticamente para o JSON acima
-            return ResponseEntity.ok(autheticate);
+            LoginResponseDTO response = new LoginResponseDTO("Login realizado com sucesso", true);
+            return ResponseEntity.ok(response);
         } else {
-            // Aqui, você INSTANCIA um objeto LoginResponseDTO para a falha
-            LoginRequestDTO authenticate = new LoginRequestDTO("E-mail ou Senha inválidos.", false);
-            // E o Spring o converte automaticamente para o JSON de falha
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticate);
+            LoginResponseDTO response = new LoginResponseDTO("E-mail ou Senha inválidos.", false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
 

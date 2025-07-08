@@ -9,6 +9,7 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
+
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
@@ -34,6 +35,7 @@ public class UsuarioService {
     public boolean autenticar(String email, String senha){
         return usuarioRepository.findByEmailAndSenha(email, senha).isPresent();
     }
+
     //Atualizar usuário
     public Optional<Usuario> updateUsuario(Long id, Usuario updatedUserDetails) {
         Optional<Usuario> existingUserOptional = usuarioRepository.findById(id);
