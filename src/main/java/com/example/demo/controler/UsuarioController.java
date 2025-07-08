@@ -35,7 +35,7 @@ public class UsuarioController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<LoginRequestDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginRequestDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
         boolean autenticado = usuarioService.autenticar(loginRequestDTO.getEmail(), String.valueOf(loginRequestDTO.getSenha()));
         if (autenticado) {
             // Agora, você INSTANCIA um objeto LoginResponseDTO para o sucesso
