@@ -33,13 +33,18 @@ public class UsuarioController {
     public List<Usuario> getAll(){return usuarioService.getAll();}
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        boolean autenticate = usuarioService.autenticar(loginRequestDTO.getEmail(), loginRequestDTO.getSenha());
-        if (autenticate) {
-            return ResponseEntity.ok("Login realizado com sucesso");
+    public ResponseEntity<LoginRequestDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        boolean autenticado = usuarioService.autenticar(loginRequestDTO.getEmail(), String.valueOf(loginRequestDTO.getSenha()));
+        if (autenticado) {
+            // Agora, você INSTANCIA um objeto LoginResponseDTO para o sucesso
+            LoginRequestDTO autheticate = new LoginRequestDTO("Login realizado com sucesso", true);
+            // E o Spring (Jackson) o converte automaticamente para o JSON acima
+            return ResponseEntity.ok(autheticate);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail ou Senha inválidos.");
+            // Aqui, você INSTANCIA um objeto LoginResponseDTO para a falha
+            LoginRequestDTO authenticate = new LoginRequestDTO("E-mail ou Senha inválidos.", false);
+            // E o Spring o converte automaticamente para o JSON de falha
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticate);
         }
     }
 
