@@ -1,4 +1,5 @@
 package com.example.demo.controler;
+
 import com.example.demo.model.dto.LoginRequestDTO;
 import com.example.demo.model.dto.LoginResponseDTO;
 import com.example.demo.model.Usuario;
@@ -8,7 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,26 +18,37 @@ import java.util.Optional;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private UsuarioRepository usuarioRepository;
-
+    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    @PostMapping("/")
-    public Usuario create(@RequestBody Usuario user){return usuarioService.save(user);}
+    @PostMapping
+    public ResponseEntity<Usuario> create(@RequestBody Usuario user){
+        Usuario savedUser = usuarioService.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    }
 
-    @GetMapping("/usuarios/{id}")
-    public Usuario getById(@PathVariable Long Id){return usuarioService.getById(Id);}
+    @GetMapping
+    public List<Usuario> getAll(){
+        return usuarioService.getAll();
+    }
 
-    @GetMapping("/usuarios")
-    public List<Usuario> getAll(){return usuarioService.getAll();}
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> getById(@PathVariable Long id){
+        Usuario usuario = usuarioService.getById(id);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
-
         boolean autenticado = usuarioService.autenticar(loginRequestDTO.email(), loginRequestDTO.senha());
 
         if (autenticado) {
@@ -57,7 +69,6 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Optional<Usuario> updatedUser = usuarioService.updateUsuario(id, usuario);
-
         return updatedUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
