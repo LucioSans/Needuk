@@ -10,7 +10,10 @@ public class Usuario {
     private Long Id;
 
     private String nome;
+
+    @Column(unique = true)
     private String email;
+
     private String senha;
     private String telefone;
     private LocalDateTime dataCadastro;
@@ -48,7 +51,6 @@ public class Usuario {
         this.nome = nome;
     }
 
-    @Column(unique = true)
     public String getEmail() {
         return email;
     }
