@@ -1,0 +1,20 @@
+Table: experiencia
+Columns:
+id bigint(20) AI PK
+carga_horaria int(11)
+data_fim date
+data_inicio date
+descricao varchar(255)
+habilidades varchar(255)
+tipo varchar(255)
+titulo varchar(255)
+user_id bigint(20)
+
+Table: usuario
+Columns:
+id bigint(20) AI PK
+data_cadastro datetime(6)
+email varchar(255)
+nome varchar(255)
+senha varchar(255)
+telefone varchar(255)
