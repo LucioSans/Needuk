@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.model.Experiencia;
 import com.example.demo.repository.ExperienciaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -23,8 +22,8 @@ public class ExperienciaService {
         return experienciaRepository.save(experiencia);
     }
     //Deletar
-    public void delete(Long Id){
-        experienciaRepository.deleteById(Id);
+    public void delete(Long id){
+        experienciaRepository.deleteById(id);
     }
     //findById
     public Experiencia findById(Long id) {
@@ -34,8 +33,7 @@ public class ExperienciaService {
     //Atualiza a experiencia
     public Experiencia update(Long Id, Experiencia experiencia){
         if(experienciaRepository.existsById(Id)){
-        Experiencia updateExperiencia = experienciaRepository.save(experiencia);
-        return updateExperiencia;
+            return experienciaRepository.save(experiencia);
         }
         return null;
     }

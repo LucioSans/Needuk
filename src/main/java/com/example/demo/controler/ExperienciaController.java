@@ -1,6 +1,7 @@
 package com.example.demo.controler;
 import com.example.demo.model.Experiencia;
 import com.example.demo.service.ExperienciaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,9 @@ public class ExperienciaController {
     }
 
     @PostMapping
-    public Experiencia create(@RequestBody Experiencia experiencia) {
-        return experienciaService.save(experiencia);
+    public ResponseEntity<Experiencia> create(@RequestBody Experiencia experiencia) {
+        Experiencia savedExperiencia = experienciaService.save(experiencia);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedExperiencia);
     }
 
     @GetMapping
@@ -27,21 +29,29 @@ public class ExperienciaController {
         return experienciaService.getAll();
     }
 
-    @GetMapping("/find")
-    public Experiencia findById(
-        @RequestParam Long id
-    ) {
-        return experienciaService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Experiencia> findById(@PathVariable Long id) {
+        Experiencia experiencia = experienciaService.findById(id);
+        if (experiencia != null) {
+            return ResponseEntity.ok(experiencia);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public Experiencia update(@PathVariable Long Id, @RequestBody Experiencia experiencia) {
-        return experienciaService.update(Id, experiencia);
+    public ResponseEntity<Experiencia> update(@PathVariable Long id, @RequestBody Experiencia experiencia) {
+        Experiencia updatedExperiencia = experienciaService.update(id, experiencia);
+        if (updatedExperiencia != null) {
+            return ResponseEntity.ok(updatedExperiencia);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long Id) {
-        experienciaService.delete(Id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        experienciaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
