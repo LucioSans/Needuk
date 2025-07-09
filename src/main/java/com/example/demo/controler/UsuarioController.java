@@ -3,6 +3,7 @@ package com.example.demo.controler;
 import com.example.demo.model.dto.LoginRequestDTO;
 import com.example.demo.model.dto.LoginResponseDTO;
 import com.example.demo.model.Usuario;
+import com.example.demo.model.dto.UsuarioDTO;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -48,15 +49,35 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
-        boolean autenticado = usuarioService.autenticar(loginRequestDTO.email(), loginRequestDTO.senha());
+        Optional<Usuario> usuarioAutenticadoOpt = usuarioService.autenticar(loginRequestDTO.email(), loginRequestDTO.senha());
 
-        if (autenticado) {
-            LoginResponseDTO response = new LoginResponseDTO("Login realizado com sucesso", true);
+        if (usuarioAutenticadoOpt.isPresent()) {
+            LoginResponseDTO response = getLoginResponseDTO(usuarioAutenticadoOpt);
             return ResponseEntity.ok(response);
         } else {
-            LoginResponseDTO response = new LoginResponseDTO("E-mail ou Senha inválidos.", false);
+            LoginResponseDTO response = new LoginResponseDTO("E-mail ou Senha inválidos.", false, null, null);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+    }
+
+    private static LoginResponseDTO getLoginResponseDTO(Optional<Usuario> usuarioAutenticadoOpt) {
+        Usuario usuarioAutenticado = usuarioAutenticadoOpt.get();
+
+        String token = "Token teste";
+
+        UsuarioDTO userDTO = new UsuarioDTO(
+                usuarioAutenticado.getId(),
+                usuarioAutenticado.getNome(),
+                usuarioAutenticado.getEmail()
+        );
+
+        LoginResponseDTO response = new LoginResponseDTO(
+                "Login realizado com sucesso",
+                true,
+                token,
+                userDTO
+        );
+        return response;
     }
 
     @DeleteMapping("/{id}")

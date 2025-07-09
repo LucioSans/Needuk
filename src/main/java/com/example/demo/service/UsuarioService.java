@@ -32,8 +32,8 @@ public class UsuarioService {
         usuarioRepository.deleteById(Id);
     }
     //Login
-    public boolean autenticar(String email, String senha){
-        return usuarioRepository.findByEmailAndSenha(email, senha).isPresent();
+    public Optional<Usuario> autenticar(String email, String senha) {
+        return usuarioRepository.findByEmailAndSenha(email, senha);
     }
 
     //Atualizar usuário
