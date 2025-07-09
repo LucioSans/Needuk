@@ -48,6 +48,7 @@ public class Usuario {
         this.nome = nome;
     }
 
+    @Column(unique = true)
     public String getEmail() {
         return email;
     }
