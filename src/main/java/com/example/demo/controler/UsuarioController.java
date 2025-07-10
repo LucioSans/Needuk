@@ -65,19 +65,18 @@ public class UsuarioController {
 
         String token = "Token teste";
 
-        UsuarioDTO userDTO = new UsuarioDTO(
+        UsuarioDTO usuarioDTO = new UsuarioDTO(
                 usuarioAutenticado.getId(),
                 usuarioAutenticado.getNome(),
                 usuarioAutenticado.getEmail()
         );
 
-        LoginResponseDTO response = new LoginResponseDTO(
+        return new LoginResponseDTO(
                 "Login realizado com sucesso",
                 true,
                 token,
-                userDTO
+                usuarioDTO
         );
-        return response;
     }
 
     @DeleteMapping("/{id}")
