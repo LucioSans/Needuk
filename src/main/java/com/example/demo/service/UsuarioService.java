@@ -56,4 +56,9 @@ public class UsuarioService {
             return Optional.empty();
         }
     }
+
+    public Optional<Usuario> findById(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
 }

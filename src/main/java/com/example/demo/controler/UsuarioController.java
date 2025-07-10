@@ -66,7 +66,7 @@ public class UsuarioController {
         String token = "Token teste";
 
         UsuarioDTO usuarioDTO = new UsuarioDTO(
-                usuarioAutenticado.getId(),
+                usuarioAutenticado.getUsuarioId(),
                 usuarioAutenticado.getNome(),
                 usuarioAutenticado.getEmail(),
                 usuarioAutenticado.getTelefone()

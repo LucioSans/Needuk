@@ -7,7 +7,7 @@ import java.util.List;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String nome;
 
@@ -22,8 +22,8 @@ public class Usuario {
 
     }
 
-    public Usuario(Long id, String nome, String email, String senha, String telefone, LocalDateTime dataCadastro, List<Experiencia> experiencias) {
-        Id = id;
+    public Usuario(Long usuarioId, String nome, String email, String senha, String telefone, LocalDateTime dataCadastro, List<Experiencia> experiencias) {
+        id = usuarioId;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -35,12 +35,12 @@ public class Usuario {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Experiencia> experiencias;
 
-    public Long getId() {
-        return Id;
+    public Long getUsuarioId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setUsuarioId(Long id) {
+        id = id;
     }
 
     public String getNome() {
@@ -90,4 +90,5 @@ public class Usuario {
     public void setExperiencias(List<Experiencia> experiencias) {
         this.experiencias = experiencias;
     }
+
 }
