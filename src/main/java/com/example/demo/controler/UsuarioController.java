@@ -68,7 +68,8 @@ public class UsuarioController {
         UsuarioDTO usuarioDTO = new UsuarioDTO(
                 usuarioAutenticado.getId(),
                 usuarioAutenticado.getNome(),
-                usuarioAutenticado.getEmail()
+                usuarioAutenticado.getEmail(),
+                usuarioAutenticado.getTelefone()
         );
 
         return new LoginResponseDTO(
