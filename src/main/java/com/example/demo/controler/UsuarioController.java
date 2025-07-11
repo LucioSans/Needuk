@@ -6,6 +6,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.model.dto.UsuarioDTO;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.UsuarioService;
+import com.example.demo.service.Jwt.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,12 @@ public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
+    private final JwtService jwtService;
 
-    public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository, JwtService jwtService) {
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -60,10 +63,10 @@ public class UsuarioController {
         }
     }
 
-    private static LoginResponseDTO getLoginResponseDTO(Optional<Usuario> usuarioAutenticadoOpt) {
+    private LoginResponseDTO getLoginResponseDTO(Optional<Usuario> usuarioAutenticadoOpt) {
         Usuario usuarioAutenticado = usuarioAutenticadoOpt.get();
 
-        String token = "Token teste";
+        String token = jwtService.generateToken(String.valueOf(usuarioAutenticado.getUsuarioId()));
 
         UsuarioDTO usuarioDTO = new UsuarioDTO(
                 usuarioAutenticado.getUsuarioId(),
