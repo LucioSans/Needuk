@@ -19,9 +19,9 @@ public class UsuarioService {
     public List<Usuario> getAll(){
         return usuarioRepository.findAll();
     }
-    //Procurar por Id
-    public Usuario getById(Long Id){
-        return usuarioRepository.findById(Id).orElseThrow();
+    //Procurar por id
+    public Usuario getById(Long id){
+        return usuarioRepository.findById(id).orElseThrow();
     }
     //Criar
     public Usuario save(Usuario usuario){

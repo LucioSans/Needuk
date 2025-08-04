@@ -17,7 +17,7 @@ public class ExperienciaService {
     }
 
     public List<Experiencia> getAll(Long usuarioId) {
-        return experienciaRepository.findByUser_Id(usuarioId);
+        return experienciaRepository.findByUserId(usuarioId);
     }
 
     public Experiencia save(Experiencia experiencia, Long usuarioId) {
@@ -28,18 +28,18 @@ public class ExperienciaService {
     }
 
     public void delete(Long id, Long usuarioId) {
-        Experiencia experiencia = experienciaRepository.findByIdAndUser_Id(id, usuarioId)
+        Experiencia experiencia = experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .orElseThrow(() -> new RuntimeException("Experiência não encontrada ou acesso negado."));
         experienciaRepository.deleteById(id);
     }
 
     public Experiencia findById(Long id, Long usuarioId) {
-        return experienciaRepository.findByIdAndUser_Id(id, usuarioId)
+        return experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .orElseThrow(() -> new RuntimeException("Experiência não encontrada para o ID: " + id));
     }
 
     public Experiencia update(Long id, Experiencia experienciaAtualizada, Long usuarioId) {
-        return experienciaRepository.findByIdAndUser_Id(id, usuarioId)
+        return experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .map(experienciaExistente -> {
                     experienciaExistente.setTitulo(experienciaAtualizada.getTitulo());
                     experienciaExistente.setTipo(experienciaAtualizada.getTipo());

@@ -40,7 +40,7 @@ public class Usuario {
     }
 
     public void setUsuarioId(Long id) {
-        id = id;
+        this.id = id;
     }
 
     public String getNome() {
