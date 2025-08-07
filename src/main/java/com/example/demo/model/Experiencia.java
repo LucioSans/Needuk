@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -7,7 +8,7 @@ public class Experiencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String titulo;
     private String descricao;
@@ -17,6 +18,7 @@ public class Experiencia {
     private Integer cargaHoraria;
     private String habilidades;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Usuario user;
@@ -26,11 +28,11 @@ public class Experiencia {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitulo() {
