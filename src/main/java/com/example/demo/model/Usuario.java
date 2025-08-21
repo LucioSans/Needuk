@@ -16,7 +16,7 @@ public class Usuario {
 
     private String senha;
     private String telefone;
-    private LocalDateTime dataCadastro;
+    private LocalDateTime dataCadastro = LocalDateTime.now();;
 
     public Usuario() {
 
@@ -28,7 +28,7 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = LocalDateTime.now();
         this.experiencias = experiencias;
     }
 
