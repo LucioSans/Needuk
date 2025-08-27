@@ -1,14 +1,3 @@
-package com.example.demo.controler;
-import com.example.demo.model.Experiencia;
-import com.example.demo.service.ExperienciaService;
-import com.example.demo.service.Jwt.JwtService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import java.util.List;
-
 @RestController
 @RequestMapping("/experiencias")
 public class ExperienciaController {
