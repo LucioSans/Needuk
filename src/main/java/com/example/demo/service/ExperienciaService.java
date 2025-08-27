@@ -5,6 +5,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.repository.ExperienciaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExperienciaService {
@@ -24,6 +25,15 @@ public class ExperienciaService {
         Usuario usuario = usuarioService.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado para o ID: " + usuarioId));
         experiencia.setUser(usuario);
+
+        // Validação: verifica se já existe uma experiência com o mesmo título
+        Optional<Experiencia> experienciaComMesmoTitulo = experienciaRepository
+            .findByUserIdAndTitulo(usuarioId, experiencia.getTitulo());
+
+        if (experienciaComMesmoTitulo.isPresent()) {
+            throw new IllegalArgumentException("Já existe uma experiência com este título para o usuário.");
+        }
+
         return experienciaRepository.save(experiencia);
     }
 
@@ -41,6 +51,14 @@ public class ExperienciaService {
     public Experiencia update(Long id, Experiencia experienciaAtualizada, Long usuarioId) {
         return experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .map(experienciaExistente -> {
+                    // Adiciona a validação do título antes de atualizar
+                    Optional<Experiencia> experienciaComMesmoTitulo = experienciaRepository
+                        .findByUserIdAndTitulo(usuarioId, experienciaAtualizada.getTitulo());
+
+                    if (experienciaComMesmoTitulo.isPresent() && !experienciaComMesmoTitulo.get().getId().equals(id)) {
+                        throw new IllegalArgumentException("Já existe uma experiência com este título para o usuário.");
+                    }
+
                     experienciaExistente.setTitulo(experienciaAtualizada.getTitulo());
                     experienciaExistente.setTipo(experienciaAtualizada.getTipo());
                     experienciaExistente.setDataInicio(experienciaAtualizada.getDataInicio());
