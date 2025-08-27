@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ExperienciaRepository  extends JpaRepository<Experiencia, Long> {
+public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> {
 
     List<Experiencia> findByUserId(Long usuarioId);
     Optional<Experiencia> findByIdAndUserId(Long id, Long usuarioId);
+    Optional<Experiencia> findByUserIdAndTitulo(Long usuarioId, String titulo);
 }
