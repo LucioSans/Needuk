@@ -31,10 +31,14 @@ public class ExperienciaController {
     }
 
     @PostMapping
-    public ResponseEntity<Experiencia> create(@RequestBody Experiencia experiencia, HttpServletRequest request) {
+    public ResponseEntity<?> create(@RequestBody Experiencia experiencia, HttpServletRequest request) {
         Long usuarioId = getUsuarioIdFromRequest(request);
-        Experiencia savedExperiencia = experienciaService.save(experiencia, usuarioId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedExperiencia);
+        try {
+            Experiencia savedExperiencia = experienciaService.save(experiencia, usuarioId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedExperiencia);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
@@ -51,10 +55,14 @@ public class ExperienciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Experiencia> update(@PathVariable Long id, @RequestBody Experiencia experiencia, HttpServletRequest request) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Experiencia experiencia, HttpServletRequest request) {
         Long usuarioId = getUsuarioIdFromRequest(request);
-        Experiencia updatedExperiencia = experienciaService.update(id, experiencia, usuarioId);
-        return ResponseEntity.ok(updatedExperiencia);
+        try {
+            Experiencia updatedExperiencia = experienciaService.update(id, experiencia, usuarioId);
+            return ResponseEntity.ok(updatedExperiencia);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
