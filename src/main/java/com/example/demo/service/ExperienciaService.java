@@ -4,6 +4,7 @@ import com.example.demo.model.Experiencia;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.ExperienciaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Importe a anotação
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +22,12 @@ public class ExperienciaService {
         return experienciaRepository.findByUserId(usuarioId);
     }
 
+    @Transactional // Adicione a anotação para garantir a transação
     public Experiencia save(Experiencia experiencia, Long usuarioId) {
         Usuario usuario = usuarioService.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado para o ID: " + usuarioId));
         experiencia.setUser(usuario);
 
-        // Validação: verifica se já existe uma experiência com o mesmo título
         Optional<Experiencia> experienciaComMesmoTitulo = experienciaRepository
             .findByUserIdAndTitulo(usuarioId, experiencia.getTitulo());
 
@@ -37,6 +38,7 @@ public class ExperienciaService {
         return experienciaRepository.save(experiencia);
     }
 
+    @Transactional // Adicione a anotação
     public void delete(Long id, Long usuarioId) {
         Experiencia experiencia = experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .orElseThrow(() -> new RuntimeException("Experiência não encontrada ou acesso negado."));
@@ -48,10 +50,10 @@ public class ExperienciaService {
                 .orElseThrow(() -> new RuntimeException("Experiência não encontrada para o ID: " + id));
     }
 
+    @Transactional // Adicione a anotação
     public Experiencia update(Long id, Experiencia experienciaAtualizada, Long usuarioId) {
         return experienciaRepository.findByIdAndUserId(id, usuarioId)
                 .map(experienciaExistente -> {
-                    // Adiciona a validação do título antes de atualizar
                     Optional<Experiencia> experienciaComMesmoTitulo = experienciaRepository
                         .findByUserIdAndTitulo(usuarioId, experienciaAtualizada.getTitulo());
 
